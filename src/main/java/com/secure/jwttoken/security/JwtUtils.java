@@ -24,11 +24,9 @@ public class JwtUtils {
     public String generateToken(User userPrincipal){
         return generateTokenByUsername(userPrincipal.getUsername());
     }
-
     public String getUsernameFromJwtToken(String token){
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
-
     private String generateTokenByUsername(String username) {
 
         return Jwts.builder()
@@ -37,7 +35,6 @@ public class JwtUtils {
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
-
     public boolean validateJwtToken(String authToken){
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
@@ -55,7 +52,6 @@ public class JwtUtils {
         }
         return false;
     }
-
     private Key getSigningKey() {
         byte [] keyBytes = Decoders.BASE64.decode(jwtSecret);
         return Keys.hmacShaKeyFor(keyBytes);
