@@ -25,6 +25,10 @@ public class JwtUtils {
         return generateTokenByUsername(userPrincipal.getUsername());
     }
 
+    public String getUsernameFromJwtToken(String token){
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    }
+
     private String generateTokenByUsername(String username) {
 
         return Jwts.builder()
@@ -51,7 +55,6 @@ public class JwtUtils {
         }
         return false;
     }
-
 
     private Key getSigningKey() {
         byte [] keyBytes = Decoders.BASE64.decode(jwtSecret);
