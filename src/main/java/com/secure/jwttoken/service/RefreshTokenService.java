@@ -36,7 +36,6 @@ public class RefreshTokenService {
         refreshToken.setExpiryDate(Instant.now().plusMillis(jwtRefreshTokenExpirationMs));
         return refreshTokenRepository.save(refreshToken);
     }
-
     public RefreshToken verifyExpiration (RefreshToken refreshToken){
         if (refreshToken.getExpiryDate().compareTo(Instant.now()) < 0){
             refreshTokenRepository.delete(refreshToken);
@@ -44,6 +43,8 @@ public class RefreshTokenService {
         }
         return refreshToken;
     }
+
+
 
 
 }

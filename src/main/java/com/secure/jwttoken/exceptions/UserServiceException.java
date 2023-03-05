@@ -4,10 +4,10 @@ import org.springframework.http.HttpStatus;
 
 public class UserServiceException extends RuntimeException{
 
-    private final static long serialVersionUID = 2L;
+    private static final long serialVersionUID = 2L;
 
-    private String message;
-    private HttpStatus httpStatus;
+    private final String message;
+    private final HttpStatus httpStatus;
 
     public UserServiceException(String message,HttpStatus httpStatus){
         this.message = message;

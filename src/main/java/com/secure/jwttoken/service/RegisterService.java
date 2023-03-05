@@ -31,11 +31,11 @@ public class RegisterService {
 
     public RegisterResponse saveNewUser(RegisterRequest request){
 
-    if(userRepository.existsByUsername(request.getUsername())){
+    if(Boolean.TRUE.equals(userRepository.existsByUsername(request.getUsername()))){
         throw new UserServiceException("Username already Exist", HttpStatus.BAD_REQUEST);
     }
 
-    if (userRepository.existsByEmail(request.getEmail())){
+    if (Boolean.TRUE.equals(userRepository.existsByEmail(request.getEmail()))){
         throw new UserServiceException("Email already Exist",HttpStatus.BAD_REQUEST);
     }
 
