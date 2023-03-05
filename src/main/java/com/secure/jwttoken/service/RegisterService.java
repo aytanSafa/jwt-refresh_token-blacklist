@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,23 +44,29 @@ public class RegisterService {
             .email(request.getEmail())
             .build();
 
-    Set<Role> roleSet = new HashSet<>();
+    Set<Role> roleSet = fillRoles(request, user);
+    user.setRoles(roleSet);
 
-    if (request.getRoles() == null){
-     roleSet.add(roleRepository.findByName(ERole.USER).get());
-     user.setRoles(roleSet);
-    }else{
-        Set<ERole> eRoles = request.getRoles();
-        for (ERole eRole : eRoles){
-            Optional<Role> role = roleRepository.findByName(eRole);
-            if(role.isPresent()){
-                roleSet.add(role.get());
+    userRepository.save(user);
+
+    return new RegisterResponse("User registered success");
+
+    }
+
+    private Set<Role> fillRoles(RegisterRequest request, User user) {
+        Set<Role> roleSet = new HashSet<>();
+
+        if (request.getRoles() == null){
+         roleSet.add(roleRepository.findByName(ERole.USER).get());
+         user.setRoles(roleSet);
+        }else{
+            Set<ERole> eRoles = request.getRoles();
+            for (ERole eRole : eRoles){
+                Optional<Role> role = roleRepository.findByName(eRole);
+                role.ifPresent(roleSet::add);
             }
         }
-    }
-    user.setRoles(roleSet);
-    userRepository.save(user);
-    return new RegisterResponse("User registered success");
+        return roleSet;
     }
 
 }
