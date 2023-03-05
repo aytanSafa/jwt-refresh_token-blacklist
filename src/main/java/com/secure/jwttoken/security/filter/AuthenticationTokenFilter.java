@@ -45,13 +45,12 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
-            filterChain.doFilter(request,response);
         }
+        filterChain.doFilter(request,response);
     }
     private  String parseJwt(String authorization) {
         if (StringUtils.hasText(authorization)){
-            return  authorization.substring(7);
+            return  authorization.substring(0,authorization.length());
         }
         return null;
     }

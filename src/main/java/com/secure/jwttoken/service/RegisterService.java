@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -42,6 +43,7 @@ public class RegisterService {
             .username(request.getUsername())
             .password(passwordEncoder.encode(request.getPassword()))
             .email(request.getEmail())
+            .createdDate(Instant.now())
             .build();
 
     Set<Role> roleSet = fillRoles(request, user);
