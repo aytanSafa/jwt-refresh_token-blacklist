@@ -50,7 +50,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     }
     private  String parseJwt(String authorization) {
         if (StringUtils.hasText(authorization)){
-            return  authorization.substring(0,authorization.length());
+            return  authorization.substring(7,authorization.length());
         }
         return null;
     }

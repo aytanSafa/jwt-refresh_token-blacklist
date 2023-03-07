@@ -12,7 +12,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 public class Role {
