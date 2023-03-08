@@ -16,25 +16,16 @@ public class BlackListService {
     private final CacheService cacheService;
     private final JwtUtils jwtUtils;
 
-
-
-
-    public void blackListTokenIfExpired(String token){
+    public void saveBlackListToken(String token){
      Claims claims = jwtUtils.extractClaims(token);
      Date expiration = claims.getExpiration();
-     long expiresIn = expiration.getTime() - new Date().getTime();
-     if (expiresIn < 0) cacheService.add(token,- expiresIn / 1000);
+     cacheService.add(token,- expiration.getTime() / 1000);
     }
 
-    public void validateToken(String token){
+    public boolean validateToken(String token){
         if(cacheService.isBlacklisted(token)){
             throw  new JwtException("Token is blacklisted");
         }
+        return true;
     }
-
-
-
-
-
-
 }
