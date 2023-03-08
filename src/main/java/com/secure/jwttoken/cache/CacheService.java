@@ -16,7 +16,7 @@ public class CacheService {
         redisTemplate.opsForValue().set(token,isBlackList,expiresIn, TimeUnit.SECONDS);
     }
     public boolean isBlacklisted(String token){
-        return  redisTemplate.opsForValue().get(token).equals(false);
+        return  (Boolean) redisTemplate.opsForValue().get(token) == true;
     }
 
     public void remove(String token){

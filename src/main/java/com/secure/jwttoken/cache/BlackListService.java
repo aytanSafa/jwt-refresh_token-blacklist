@@ -1,5 +1,6 @@
 package com.secure.jwttoken.cache;
 
+import com.secure.jwttoken.exceptions.BlacklistException;
 import com.secure.jwttoken.security.JwtUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -19,12 +20,12 @@ public class BlackListService {
     public void saveBlackListToken(String token,boolean isBlackList){
      Claims claims = jwtUtils.extractClaims(token);
      Date expiration = claims.getExpiration();
-     cacheService.add(token,isBlackList,- expiration.getTime() / 1000);
+     cacheService.add(token,isBlackList, expiration.getTime() / 1000);
     }
 
     public boolean validateToken(String token){
         if(cacheService.isBlacklisted(token)){
-            throw  new JwtException("Token is blacklisted");
+            throw  new BlacklistException("Token is blacklisted");
         }
         return true;
     }

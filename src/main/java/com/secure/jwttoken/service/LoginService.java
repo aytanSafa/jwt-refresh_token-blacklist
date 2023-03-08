@@ -33,7 +33,7 @@ public class LoginService {
         String jwt = jwtUtils.generateToken(user);
         List<String> roles = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
-        blackListService.saveBlackListToken(jwt,true);
+        blackListService.saveBlackListToken(jwt,false);
         return new LoginResponse(jwt,"Bearer",refreshToken.getToken(),user.getId(),user.getUsername(),user.getEmail(),roles);
     }
 

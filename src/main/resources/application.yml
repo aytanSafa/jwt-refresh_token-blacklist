@@ -17,4 +17,6 @@ jwt:
   secret: 78214125442A472D4B6150645367566B597033733676397924423F4528482B4D
   jwtExpirationMs: 90000
   jwtRefreshExpirationMs: 150000
-
+logging:
+  level:
+    root: debug
