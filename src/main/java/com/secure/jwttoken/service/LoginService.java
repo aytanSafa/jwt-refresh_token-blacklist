@@ -1,5 +1,6 @@
 package com.secure.jwttoken.service;
 
+import com.secure.jwttoken.cache.BlackListService;
 import com.secure.jwttoken.entity.RefreshToken;
 import com.secure.jwttoken.payload.request.LoginRequest;
 import com.secure.jwttoken.payload.response.LoginResponse;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class LoginService {
-
+    private final BlackListService blackListService;
     private final JwtUtils jwtUtils;
     private final UserRepository userRepository;
     private final RefreshTokenService refreshTokenService;
@@ -32,6 +33,7 @@ public class LoginService {
         String jwt = jwtUtils.generateToken(user);
         List<String> roles = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
+        blackListService.saveBlackListToken(jwt,true);
         return new LoginResponse(jwt,"Bearer",refreshToken.getToken(),user.getId(),user.getUsername(),user.getEmail(),roles);
     }
 

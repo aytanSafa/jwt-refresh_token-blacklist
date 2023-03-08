@@ -1,4 +1,4 @@
-package com.secure.jwttoken;
+package com.secure.jwttoken.cache;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

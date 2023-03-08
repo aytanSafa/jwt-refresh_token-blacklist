@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 public class LogoutService {
 
     private final BlackListService blackListService;
-    public Object logout(String token) {
-        blackListService.saveBlackListToken(token);
+    public Object logout(String token,boolean isBlackList) {
+        blackListService.saveBlackListToken(token,isBlackList);
         return new LogoutResponse("Logout Success");
     }
 }
